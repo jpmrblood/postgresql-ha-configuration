@@ -39,7 +39,7 @@ bootstrap:
 postgresql:
     listen: 192.0.2.11:5432
     connect_address: 192.0.2.11:5432
-    data_dir: /data/patroni
+    data_dir: /var/lib/postgresql/10/patroni
     pgpass: /tmp/pgpass
     authentication:
         replication:
