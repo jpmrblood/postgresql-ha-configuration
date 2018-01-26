@@ -1,0 +1,58 @@
+scope: postgres
+namespace: /db/
+name: postgresql0
+
+restapi:
+    listen: 192.0.2.11:8008
+    connect_address: 192.0.2.11:8008
+
+etcd:
+    host: 192.0.2.21:2379
+
+bootstrap:
+    dcs:
+        ttl: 30
+        loop_wait: 10
+        retry_timeout: 10
+        maximum_lag_on_failover: 1048576
+        postgresql:
+            use_pg_rewind: true
+
+    initdb:
+    - encoding: UTF8
+    - data-checksums
+
+    pg_hba:
+    - host replication replicator 127.0.0.1/32 md5
+    - host replication replicator 192.0.2.11/0 md5
+    - host replication replicator 192.0.2.12/0 md5
+    - host replication replicator 192.0.2.13/0 md5
+    - host all all 0.0.0.0/0 md5
+
+    users:
+        admin:
+            password: ioqu8ohqueh6kai5va0Hoigirae7Xaem
+            options:
+                - createrole
+                - createdb
+
+postgresql:
+    listen: 192.0.2.11:5432
+    connect_address: 192.0.2.11:5432
+    data_dir: /data/patroni
+    pgpass: /tmp/pgpass
+    authentication:
+        replication:
+            username: replicator
+            password: shohkaitahsee0er6eXoh0Ohghie2toh
+        superuser:
+            username: postgres
+            password: exuush9shohlail6Cool9eeng3kae5iy
+    parameters:
+        unix_socket_directories: '.'
+
+tags:
+    nofailover: false
+    noloadbalance: false
+    clonefrom: false
+    nosync: false
